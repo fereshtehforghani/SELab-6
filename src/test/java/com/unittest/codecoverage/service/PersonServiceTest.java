@@ -1,6 +1,7 @@
 package com.unittest.codecoverage.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -120,5 +121,18 @@ public class PersonServiceTest {
 				.isInstanceOf(PersonException.class)
 				.hasFieldOrPropertyWithValue("errors", expectedErrors)
 				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testGet_shouldReturnPersonWithTheGivenName() {
+		Person person = new Person();
+		person.setName("Afagh");
+		person.setAge(22);
+		person.setGender(Gender.F);
+
+		when(service.get(any(String.class))).thenReturn(person);
+
+		assertEquals("Afagh", repository.get("Afagh").getName());
+
 	}
 }
