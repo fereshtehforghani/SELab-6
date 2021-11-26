@@ -130,9 +130,37 @@ public class PersonServiceTest {
 		person.setAge(22);
 		person.setGender(Gender.F);
 
-		when(service.get(any(String.class))).thenReturn(person);
+		when(service.get("Afagh")).thenReturn(person);
 
 		assertEquals("Afagh", repository.get("Afagh").getName());
 
+	}
+
+	@Test
+	public void testGet_shouldThrowPersonExceptionWhenPersonNameIsNull() {
+		String expectedMessage = "Name is required";
+		String name = null;
+
+		assertThatThrownBy(() -> service.get(name))
+				.isInstanceOf(PersonException.class)
+				.hasMessage(expectedMessage);
+	}
+
+	@Test
+	public void testDelete_shouldDeletePersonWithTheGivenName() {
+		String name = "Alma";
+		doNothing().when(repository).delete(name);
+		service.delete(name);
+
+	}
+
+	@Test
+	public void testDelete_shouldThrowPersonExceptionWhenPersonNameIsNull() {
+		String expectedMessage = "Name is required";
+		String name = null;
+
+		assertThatThrownBy(() -> service.delete(name))
+				.isInstanceOf(PersonException.class)
+				.hasMessage(expectedMessage);
 	}
 }
