@@ -11,6 +11,10 @@ import com.unittest.codecoverage.models.TrafficLigth;
 import com.unittest.codecoverage.services.TrafficBehaviorService;
 import com.unittest.codecoverage.services.impl.TrafficBehaviorServiceImpl;
 
+import static com.unittest.codecoverage.models.StreetDirectionFlow.ONE_WAY;
+import static com.unittest.codecoverage.models.TrafficLigth.RED;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TrafficBehaviorServiceTest {
 	
 	private TrafficBehaviorService trafficBehaviorService = new TrafficBehaviorServiceImpl();
@@ -23,7 +27,7 @@ public class TrafficBehaviorServiceTest {
 		
 		Footpassenger currentFootpassengerBehavior = new Footpassenger();
 		currentFootpassengerBehavior.setCrossedTheRoad(true);
-		currentFootpassengerBehavior.setCrossedTrafficLigth(TrafficLigth.RED);
+		currentFootpassengerBehavior.setCrossedTrafficLigth(RED);
 		
 		Assertions.assertThatThrownBy(() -> trafficBehaviorService.footpassengerCrossTheStreet(currentTrafic, currentFootpassengerBehavior))
 			.isInstanceOf(BehaviorException.class)
@@ -49,5 +53,40 @@ public class TrafficBehaviorServiceTest {
 			.hasMessage("You should be more careful");
 		
 	}
+
+	@Test
+	public void testSetGetTrafficLight(){
+		Traffic currentTraffic = new Traffic();
+		currentTraffic.setCurrentTrafficLight(RED);
+		assertEquals(RED, currentTraffic.getCurrentTrafficLight());
+
+	}
+
+	@Test
+	public void testSetGetMaxSpeedAllowed() {
+		Traffic currentTraffic = new Traffic();
+		currentTraffic.setMaxSpeedAllowed((short) 50);
+		assertEquals((short) 50, currentTraffic.getMaxSpeedAllowed());
+
+	}
+
+	@Test
+	public void testSetGetMinSpeedAllowed() {
+		Traffic currentTraffic = new Traffic();
+		currentTraffic.setMinSpeedAllowed((short) 10);
+		assertEquals((short) 10, currentTraffic.getMinSpeedAllowed());
+
+	}
+
+	@Test
+	public void testSetGetStreetDirectionFlow() {
+		Traffic currentTraffic = new Traffic();
+		currentTraffic.setStreetDirectionFlow(ONE_WAY);
+		assertEquals(ONE_WAY, currentTraffic.getStreetDirectionFlow());
+
+	}
+
+
+
 
 }
